@@ -1,0 +1,477 @@
+@import "tailwindcss";
+
+/* ──────────────────────────────────────────────────────────────
+   GableMath design language
+   Floating modules on a quiet void. Everything that is not a module
+   recedes (paper-toned background, faint chalk grid that fades out),
+   so the calculators read as objects hovering above the page.
+   ────────────────────────────────────────────────────────────── */
+
+:root {
+  --bg: #f3f2ee;
+  --bg-grid: rgba(21, 22, 26, 0.07);
+  --surface: #ffffff;
+  --surface-2: #f7f7f4;
+  --surface-3: #efeee9;
+  --ink: #15161a;
+  --ink-2: #484b53;
+  --ink-3: #686b74;
+  --line: rgba(21, 22, 26, 0.08);
+  --line-strong: rgba(21, 22, 26, 0.14);
+  --accent: #2e5bff; /* chalk-line blue */
+  --accent-hover: #2149e0;
+  --accent-ink: #ffffff;
+  --accent-soft: rgba(46, 91, 255, 0.09);
+  --accent-softer: rgba(46, 91, 255, 0.05);
+  --pencil: #f2c14e; /* carpenter-pencil yellow */
+  --pencil-soft: rgba(242, 193, 78, 0.22);
+  --ok: #0c6b47;
+  --ok-soft: rgba(12, 107, 71, 0.1);
+  --warn: #b86a12;
+  --warn-soft: rgba(184, 106, 18, 0.1);
+  --bad: #cf3f3f;
+  --bad-soft: rgba(207, 63, 63, 0.1);
+  --float-1: 0 1px 1px rgba(16, 18, 24, 0.03), 0 2px 6px -2px rgba(16, 18, 24, 0.05),
+    0 22px 44px -26px rgba(16, 18, 24, 0.22);
+  --float-2: 0 1px 2px rgba(16, 18, 24, 0.04), 0 10px 24px -10px rgba(16, 18, 24, 0.12),
+    0 44px 88px -36px rgba(16, 18, 24, 0.32);
+  --float-pop: 0 2px 4px rgba(16, 18, 24, 0.06), 0 18px 40px -12px rgba(16, 18, 24, 0.28);
+  --inset: inset 0 1px 2px rgba(16, 18, 24, 0.05);
+  --hairline-top: inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0b0c0f;
+    --bg-grid: rgba(255, 255, 255, 0.05);
+    --surface: #15171c;
+    --surface-2: #1b1e24;
+    --surface-3: #22252c;
+    --ink: #eeeff1;
+    --ink-2: #aeb2bb;
+    --ink-3: #8a8e98;
+    --line: rgba(255, 255, 255, 0.07);
+    --line-strong: rgba(255, 255, 255, 0.13);
+    --accent: #7f9cff;
+    --accent-hover: #9bb2ff;
+    --accent-ink: #0b0c0f;
+    --accent-soft: rgba(127, 156, 255, 0.14);
+    --accent-softer: rgba(127, 156, 255, 0.07);
+    --pencil: #f2c14e;
+    --pencil-soft: rgba(242, 193, 78, 0.16);
+    --ok: #4cc595;
+    --ok-soft: rgba(76, 197, 149, 0.12);
+    --warn: #e5a04a;
+    --warn-soft: rgba(229, 160, 74, 0.12);
+    --bad: #ff7b7b;
+    --bad-soft: rgba(255, 123, 123, 0.12);
+    --float-1: 0 1px 0 rgba(255, 255, 255, 0.03) inset, 0 2px 6px -2px rgba(0, 0, 0, 0.5),
+      0 28px 56px -28px rgba(0, 0, 0, 0.8);
+    --float-2: 0 1px 0 rgba(255, 255, 255, 0.04) inset, 0 10px 24px -10px rgba(0, 0, 0, 0.6),
+      0 48px 96px -36px rgba(0, 0, 0, 0.9);
+    --float-pop: 0 1px 0 rgba(255, 255, 255, 0.05) inset, 0 18px 40px -12px rgba(0, 0, 0, 0.75);
+    --inset: inset 0 1px 2px rgba(0, 0, 0, 0.35);
+    --hairline-top: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme="dark"] {
+  --bg: #0b0c0f;
+  --bg-grid: rgba(255, 255, 255, 0.05);
+  --surface: #15171c;
+  --surface-2: #1b1e24;
+  --surface-3: #22252c;
+  --ink: #eeeff1;
+  --ink-2: #aeb2bb;
+  --ink-3: #8a8e98;
+  --line: rgba(255, 255, 255, 0.07);
+  --line-strong: rgba(255, 255, 255, 0.13);
+  --accent: #7f9cff;
+  --accent-hover: #9bb2ff;
+  --accent-ink: #0b0c0f;
+  --accent-soft: rgba(127, 156, 255, 0.14);
+  --accent-softer: rgba(127, 156, 255, 0.07);
+  --pencil-soft: rgba(242, 193, 78, 0.16);
+  --ok: #4cc595;
+  --ok-soft: rgba(76, 197, 149, 0.12);
+  --warn: #e5a04a;
+  --warn-soft: rgba(229, 160, 74, 0.12);
+  --bad: #ff7b7b;
+  --bad-soft: rgba(255, 123, 123, 0.12);
+  --float-1: 0 1px 0 rgba(255, 255, 255, 0.03) inset, 0 2px 6px -2px rgba(0, 0, 0, 0.5),
+    0 28px 56px -28px rgba(0, 0, 0, 0.8);
+  --float-2: 0 1px 0 rgba(255, 255, 255, 0.04) inset, 0 10px 24px -10px rgba(0, 0, 0, 0.6),
+    0 48px 96px -36px rgba(0, 0, 0, 0.9);
+  --float-pop: 0 1px 0 rgba(255, 255, 255, 0.05) inset, 0 18px 40px -12px rgba(0, 0, 0, 0.75);
+  --inset: inset 0 1px 2px rgba(0, 0, 0, 0.35);
+  --hairline-top: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-surface-3: var(--surface-3);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-ink: var(--accent-ink);
+  --color-accent-soft: var(--accent-soft);
+  --color-pencil: var(--pencil);
+  --color-pencil-soft: var(--pencil-soft);
+  --color-ok: var(--ok);
+  --color-ok-soft: var(--ok-soft);
+  --color-warn: var(--warn);
+  --color-warn-soft: var(--warn-soft);
+  --color-bad: var(--bad);
+  --color-bad-soft: var(--bad-soft);
+  /* System UI stack: zero font download, native rendering (SF Pro / Segoe UI / Roboto). */
+  --font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI Variable", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-display: var(--font-fraunces), ui-serif, Georgia, serif;
+  --font-mono: ui-monospace, "SF Mono", Menlo, monospace;
+  --radius-module: 28px;
+  --radius-panel: 20px;
+  --radius-field: 14px;
+  --shadow-float: var(--float-1);
+  --shadow-float-2: var(--float-2);
+  --shadow-pop: var(--float-pop);
+  --ease-spring: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scroll-padding-top: 96px;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100dvh;
+}
+
+/* The void: a chalk-line grid visible only around the middle of the page,
+   dissolving toward the edges so modules appear to hover over nothing. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image: radial-gradient(circle at center, var(--bg-grid) 1px, transparent 1.4px);
+  background-size: 22px 22px;
+  mask-image: radial-gradient(ellipse 70% 55% at 50% 30%, #000 0%, transparent 72%);
+  -webkit-mask-image: radial-gradient(ellipse 70% 55% at 50% 30%, #000 0%, transparent 72%);
+}
+
+::selection {
+  background: var(--pencil-soft);
+  color: var(--ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 10px;
+}
+
+@layer components {
+  /* Floating module — the core surface of the whole site. */
+  .module {
+    background: var(--surface);
+    border-radius: var(--radius-module);
+    box-shadow: var(--float-1), var(--hairline-top);
+    border: 1px solid var(--line);
+  }
+  .module-raise {
+    transition: transform 320ms var(--ease-spring), box-shadow 320ms var(--ease-spring);
+  }
+  @media (hover: hover) {
+    .module-raise:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--float-2), var(--hairline-top);
+    }
+  }
+  .module-raise:active {
+    transform: translateY(-1px) scale(0.995);
+    transition-duration: 80ms;
+  }
+  .panel {
+    background: var(--surface-2);
+    border-radius: var(--radius-panel);
+    border: 1px solid var(--line);
+  }
+  .well {
+    background: var(--surface-2);
+    border-radius: var(--radius-field);
+    box-shadow: var(--inset);
+    border: 1px solid var(--line);
+  }
+  .eyebrow {
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--ink-3);
+  }
+  .display {
+    font-family: var(--font-display);
+    font-optical-sizing: auto;
+    letter-spacing: -0.02em;
+    font-weight: 560;
+  }
+  .num {
+    font-variant-numeric: tabular-nums lining-nums;
+    font-feature-settings: "tnum", "lnum";
+  }
+  .prose-gm {
+    color: var(--ink-2);
+    line-height: 1.72;
+    font-size: 1.0125rem;
+  }
+  .prose-gm h2 {
+    font-family: var(--font-display);
+    color: var(--ink);
+    font-size: 1.55rem;
+    line-height: 1.25;
+    letter-spacing: -0.015em;
+    font-weight: 560;
+    margin: 2.2rem 0 0.8rem;
+  }
+  .prose-gm h3 {
+    color: var(--ink);
+    font-size: 1.08rem;
+    font-weight: 650;
+    margin: 1.6rem 0 0.5rem;
+  }
+  .prose-gm p {
+    margin: 0.8rem 0;
+  }
+  .prose-gm ul,
+  .prose-gm ol {
+    margin: 0.8rem 0;
+    padding-left: 1.25rem;
+  }
+  .prose-gm ul {
+    list-style: disc;
+  }
+  .prose-gm ol {
+    list-style: decimal;
+  }
+  .prose-gm li {
+    margin: 0.35rem 0;
+  }
+  .prose-gm a {
+    color: var(--accent);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+  }
+  .prose-gm strong {
+    color: var(--ink);
+    font-weight: 650;
+  }
+  .prose-gm table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 0.93rem;
+    margin: 1rem 0;
+  }
+  .prose-gm th {
+    text-align: left;
+    color: var(--ink-3);
+    font-weight: 600;
+    font-size: 0.78rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding: 0.55rem 0.75rem;
+    border-bottom: 1px solid var(--line-strong);
+  }
+  .prose-gm td {
+    padding: 0.6rem 0.75rem;
+    border-bottom: 1px solid var(--line);
+    color: var(--ink);
+    font-variant-numeric: tabular-nums;
+  }
+  .prose-gm .table-wrap {
+    overflow-x: auto;
+    margin: 1rem 0;
+    -webkit-overflow-scrolling: touch;
+  }
+  .prose-gm .table-wrap table {
+    margin: 0;
+    min-width: 480px;
+  }
+  .prose-gm figure {
+    margin: 1.75rem 0;
+  }
+  .prose-gm figure img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 20px;
+    background: var(--surface-3);
+  }
+  .prose-gm figcaption {
+    margin-top: 0.55rem;
+    font-size: 0.8rem;
+    line-height: 1.45;
+    color: var(--ink-3);
+  }
+  .prose-gm figcaption .credit {
+    display: block;
+    font-size: 0.72rem;
+  }
+  .prose-gm figcaption a {
+    color: inherit;
+    text-decoration-color: var(--line-strong);
+  }
+  .prose-gm blockquote {
+    margin: 1.25rem 0;
+    padding: 0.9rem 1.1rem;
+    border-radius: 16px;
+    background: var(--accent-soft);
+    color: var(--ink);
+  }
+  .prose-gm blockquote p {
+    margin: 0;
+  }
+  .prose-gm code {
+    font-family: var(--font-mono);
+    font-size: 0.88em;
+    background: var(--surface-3);
+    padding: 0.1em 0.35em;
+    border-radius: 6px;
+  }
+
+  /* Skeleton shimmer: a slow breathing block with a light sweep. */
+  .skeleton {
+    position: relative;
+    overflow: hidden;
+    background: var(--surface-3);
+    border-radius: 14px;
+    animation: gm-breathe 1.8s ease-in-out infinite;
+  }
+  .skeleton::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    transform: translateX(-100%);
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.45), transparent);
+    animation: gm-sweep 1.6s ease-in-out infinite;
+  }
+  :root[data-theme="dark"] .skeleton::after {
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.06), transparent);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .skeleton::after {
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.06), transparent);
+    }
+  }
+}
+
+@keyframes gm-breathe {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.55;
+  }
+}
+@keyframes gm-sweep {
+  100% {
+    transform: translateX(100%);
+  }
+}
+@keyframes gm-rise {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes gm-pop {
+  0% {
+    transform: scale(0.96);
+    opacity: 0.4;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+.animate-rise {
+  animation: gm-rise 520ms var(--ease-spring) both;
+}
+.animate-pop {
+  animation: gm-pop 260ms var(--ease-spring) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@media print {
+  body::before,
+  .no-print {
+    display: none !important;
+  }
+  body {
+    background: #fff;
+  }
+  .module {
+    box-shadow: none;
+    border: 1px solid #ddd;
+  }
+}
+
+/* Number inputs: no spinners; we provide our own steppers. */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+/* Escape hatch for components embedded inside long-form prose. */
+.prose-gm .not-prose ul,
+.prose-gm .not-prose ol {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+.prose-gm .not-prose li {
+  margin: 0;
+}
+.prose-gm .not-prose h3 {
+  margin: 0;
+  font-size: inherit;
+}
+.prose-gm .not-prose p {
+  margin: 0;
+}
